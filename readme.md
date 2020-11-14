@@ -29,6 +29,8 @@ The SketchIt application allows user to draw shapes by using provided tools and 
 
 3. ##### Menubar
 
+   (Note that each of the following menu items has an accelerator corresponding to it)
+
    - File
 
      - **New**: create a new blank drawing with prompt to save before opening a new file
@@ -40,7 +42,7 @@ The SketchIt application allows user to draw shapes by using provided tools and 
 
      - **Copy**: copy the currently selected shape onto clipboard (must be used in selection tool mode with one shape being selected)
      - **Cut**: cut the currently selected shape onto clipboard (must be used in selection tool mode with one shape being selected)
-     - **Paste**: paste the shape on the clipboard (if there is one) on to the canvas at its originally position when it is copied/cut (must be used in selection tool mode
+     - **Paste**: paste the shape on the clipboard (if there is one) on to the canvas at its originally position when it is copied/cut (must be used in selection tool mode. Note that a copied/cut item can only be paste once
 
    - Help
 
