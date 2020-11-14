@@ -18,7 +18,7 @@ public class Model {
     // Properties: line colour, fill colour, line thickness, line style
     public static Color lineColour = Color.BLACK;
     public static  Color fillColour = Color.GOLD;
-    public static  int thickness = 1;
+    public static  int thickness = 3;
     public static  int lineStyle = 1;
 
     Model() {

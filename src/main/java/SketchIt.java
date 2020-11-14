@@ -222,7 +222,7 @@ public class SketchIt extends Application {
 
         about.setOnAction(actionEvent -> {
             Alert dialogue = new Alert(AlertType.INFORMATION,
-                    "Created by\n" + "Name: Yilin Ding\n" + "WatId: 20765311",
+                    "Created by\n" + "Name: Yilin Ding\n" + "WatID: 20765311",
                     ButtonType.CLOSE);
             dialogue.setTitle("About Info");
             dialogue.setHeaderText("SketchIt");
