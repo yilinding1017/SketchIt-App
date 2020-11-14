@@ -1,6 +1,6 @@
-Yilin Ding*<br>*20765311 y264ding*<br>*openjdk version "11.0.8" 2020-07-14*<br>*macOS 11.0.1 (MacBook Pro 2019)*<br>
+Yilin Ding<br>*20765311 y264ding*<br>*openjdk version "11.0.8" 2020-07-14*<br>*macOS 11.0.1 (MacBook Pro 2019)*<br>sources of images used: https://www.flaticon.com/<br>
 
- ### SketchIt Description:
+ ### SketchIt:
 
 The SketchIt application allows user to draw shapes by using provided tools and set their properties. This application has the following layout and their corresponding features in detail:
 
