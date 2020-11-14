@@ -40,7 +40,7 @@ public class ToolbarView extends VBox implements IView {
         // Add layout
         this.setMaxWidth(300);
         this.setMaxHeight(800);
-        this.setMinHeight(500);
+        this.setMinHeight(350);
         this.setMinWidth(200);
 
         this.layoutView();

@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert;
@@ -25,10 +26,11 @@ import java.util.Optional;
 public class SketchIt extends Application {
     Shape copiedShape;
     int count = 1;
+    static MenuBar menubar;
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Create menu items
-        MenuBar menubar = new MenuBar();
+        menubar = new MenuBar();
 
         Menu fileMenu = new Menu("File");
         MenuItem newfile = new MenuItem("New");
@@ -72,12 +74,34 @@ public class SketchIt extends Application {
         // put together the canvas and the toolbar
         HBox box = new HBox();
         box.getChildren().addAll(toolbar,canvas);
+        box.setPadding(new Insets(0,0,0,5));
 
         // add the menubar into the above
         VBox root = new VBox();
         root.getChildren().addAll(menubar,box);
 
-        Scene scene = new Scene(root , 1100, 700);
+        // Attach the scene to the stage and show it
+
+        primaryStage.setResizable(true);
+        primaryStage.setMinWidth(450);
+        primaryStage.setMinHeight(450);
+        primaryStage.setMaxWidth(1250);
+        primaryStage.setMaxHeight(860);
+
+        Scene scene = new Scene(root , 1100, 800);
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("SketchIt");
+        primaryStage.show();
+
+        //canvas.setPrefSize(primaryStage.getWidth(), primaryStage.getHeight());
+        /*canvas.maxX = canvas.getWidth();
+        canvas.maxY = primaryStage.getHeight()-29;*/
+        //canvas.maxY = canvas.getHeight()+29;
+        System.out.println("Stage: "+primaryStage.getWidth() + " " + primaryStage.getHeight());
+        System.out.println("Canvas: "+canvas.getWidth() + " "+ canvas.getHeight());
+        System.out.println("Toolbar "+toolbar.getWidth() + " "+ toolbar.getHeight());
+        System.out.println("Menubar "+menubar.getWidth() + " "+ menubar.getHeight());
 
         root.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -233,16 +257,6 @@ public class SketchIt extends Application {
                 copiedShape = null;
             }
         });
-
-        // Attach the scene to the stage and show it
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(true);
-        primaryStage.setMinWidth(450);
-        primaryStage.setMinHeight(450);
-        primaryStage.setMaxWidth(1250);
-        primaryStage.setMaxHeight(860);
-        primaryStage.setTitle("SketchIt");
-        primaryStage.show();
     }
 
     // copy the given shape to the global shape holder

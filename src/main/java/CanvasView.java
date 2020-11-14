@@ -28,8 +28,8 @@ public class CanvasView extends Pane implements IView {
 
     static double minX = 30;
     static double minY = 30;
-    static double maxX = 900;
-    static double maxY = 820;
+    //static double getWidth() = 900;
+    //static double (getHeight()+SketchIt.menubar.getHeight()-28) = 820;
 
     double startX, startY;
     static Shape selectedShape = null;
@@ -51,7 +51,6 @@ public class CanvasView extends Pane implements IView {
         this.setPrefHeight(830);
         this.setMaxHeight(850);
 
-
         this.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.DOTTED, new CornerRadii(2), BorderWidths.DEFAULT)));
         //this.setPadding(new Insets(20,20,20,20));
@@ -61,8 +60,8 @@ public class CanvasView extends Pane implements IView {
 
         minX = this.getLayoutX()+2;
         minY = this.getLayoutY()+2;
-        maxX = 950;
-        maxY = 810;
+        //getWidth() = 950;
+        //(getHeight()+SketchIt.menubar.getHeight()-28)) = 810;
         model.addView(this);
     }
 
@@ -195,27 +194,27 @@ public class CanvasView extends Pane implements IView {
                         double rightMax = 0;
                         if(selectedShape.getId()=="Line") {
                             Line selectedLine = (Line) selectedShape;
-                            leftMax = Math.max(minX-selectedLine.getEndX(),minX-selectedLine.getStartX());
-                            rightMax = Math.min(maxX-selectedLine.getEndX(),maxX-selectedLine.getStartX());
-                            upMax = -Math.min(Math.abs(minY-selectedLine.getEndY()),Math.abs(minY-selectedLine.getStartY()));
-                            dnMax = Math.min(Math.abs(maxY-selectedLine.getEndY()),Math.abs(maxY-selectedLine.getStartY()));
+                            leftMax = Math.min(0,Math.max(minX-selectedLine.getEndX(),minX-selectedLine.getStartX()));
+                            rightMax = Math.max(0,Math.min(getWidth()-selectedLine.getEndX(),getWidth()-selectedLine.getStartX()));
+                            upMax = Math.min(0,-Math.min(Math.abs(minY-selectedLine.getEndY()),Math.abs(minY-selectedLine.getStartY())));
+                            dnMax = Math.max(0,Math.min(Math.abs((getHeight()+SketchIt.menubar.getHeight()-28)-selectedLine.getEndY()),Math.abs((getHeight()+SketchIt.menubar.getHeight()-28)-selectedLine.getStartY())));
                         } else if(selectedShape.getId()=="Circle") {
                             Circle selectedCircle = (Circle) selectedShape;
-                            leftMax = minX-(selectedCircle.getCenterX()-selectedCircle.getRadius());
-                            rightMax = maxX-(selectedCircle.getCenterX()+selectedCircle.getRadius());
-                            upMax = minY-(selectedCircle.getCenterY()-selectedCircle.getRadius());
-                            dnMax = maxY-(selectedCircle.getCenterY()+selectedCircle.getRadius());
+                            leftMax = Math.min(0,minX-(selectedCircle.getCenterX()-selectedCircle.getRadius()));
+                            rightMax = Math.max(0,getWidth()-(selectedCircle.getCenterX()+selectedCircle.getRadius()));
+                            upMax = Math.min(0,minY-(selectedCircle.getCenterY()-selectedCircle.getRadius()));
+                            dnMax = Math.max(0,(getHeight()+SketchIt.menubar.getHeight()-28)-(selectedCircle.getCenterY()+selectedCircle.getRadius()));
                         } else if(selectedShape.getId()=="Rectangle") {
                             Rectangle selectedRec = (Rectangle) selectedShape;
-                            leftMax = minX-selectedRec.getX();
-                            rightMax = maxX-(selectedRec.getX()+selectedRec.getWidth());
-                            upMax = minY-selectedRec.getY();
-                            dnMax = maxY-(selectedRec.getY()+selectedRec.getWidth());
+                            leftMax = Math.min(0,minX-selectedRec.getX());
+                            rightMax = Math.max(0,getWidth()-(selectedRec.getX()+selectedRec.getWidth()));
+                            upMax = Math.min(0,minY-selectedRec.getY());
+                            dnMax = Math.max(0,(getHeight()+SketchIt.menubar.getHeight()-28)-(selectedRec.getY()+selectedRec.getHeight()));
                         }
 
                         if(event.getX() < minX) {
                             shiftX = leftMax;
-                        } else if(event.getX() > maxX) {
+                        } else if(event.getX() > getWidth()) {
                             shiftX = rightMax;
                         } else {
                             shiftX = event.getX()-startX;
@@ -225,7 +224,7 @@ public class CanvasView extends Pane implements IView {
 
                         if(event.getY() < minY) {
                             shiftY = upMax;
-                        } else if(event.getY() > maxY) {
+                        } else if(event.getY() > (getHeight()+SketchIt.menubar.getHeight()-28)) {
                             shiftY = dnMax;
                         } else {
                             shiftY = event.getY()-startY;
@@ -241,15 +240,16 @@ public class CanvasView extends Pane implements IView {
                             // Line
                             if(event.getX()<minX) {
                                 createdLine.setEndX(minX);
-                            } else if(event.getX()>maxX) {
-                                createdLine.setEndX(maxX);
+                            } else if(event.getX()>getWidth()) {
+                                createdLine.setEndX(getWidth());
                             } else {
                                 createdLine.setEndX(event.getX());
                             }
+
                             if(event.getY()<minY) {
                                 createdLine.setEndY(minY);
-                            } else if(event.getY()>maxY) {
-                                createdLine.setEndY(maxY);
+                            } else if(event.getY()>(getHeight()+SketchIt.menubar.getHeight()-28)) {
+                                createdLine.setEndY((getHeight()+SketchIt.menubar.getHeight()-28));
                             } else {
                                 createdLine.setEndY(event.getY());
                             }
@@ -258,15 +258,36 @@ public class CanvasView extends Pane implements IView {
                             Point2D des = new Point2D(event.getX(), event.getY());
                             double distance = des.distance(startX,startY);
                             distance = Math.min(distance,Math.abs(minX-startX));
-                            distance = Math.min(distance,Math.abs(maxX-startX));
+                            distance = Math.min(distance,Math.abs(getWidth()-startX));
                             distance = Math.min(distance,Math.abs(minY-startY));
-                            distance = Math.min(distance,Math.abs(maxY-startY));
+                            distance = Math.min(distance,Math.abs((getHeight()+SketchIt.menubar.getHeight()-28)-startY));
                             createdCircle.setRadius(distance);
                         } else if(model.shapeType == 3) {
-                            double width = event.getX() - startX;
-                            if(width < 0) width = 0;
-                            double height = event.getY() - startY;
-                            if(height < 0) height = 0;
+                            double width = event.getX()-startX;
+                            double height = event.getY()-startY;
+
+                            width = Math.min(width,getWidth()-startX);
+                            height = Math.min(height,(getHeight()+SketchIt.menubar.getHeight()-28)-startY);
+
+                            /*if(event.getX()<minX) {
+                                width = Math.max(width,minX-startX);
+                            } else if(event.getX()>getWidth()) {
+                                width = Math.min(width,getWidth()-startX);
+                            } else {
+                                width = width;
+                            }
+
+                            if(event.getY()<minY) {
+                                height = Math.max(height,minY-startY);
+                            } else if(event.getY()>(getHeight()+SketchIt.menubar.getHeight()-28)) {
+                                height = Math.min(height,(getHeight()+SketchIt.menubar.getHeight()-28)-startY);
+                            } else {
+                                height = height;
+                            }*/
+
+                            /*if(width < 0) width = -width;
+                            if(height < 0) height = -height;*/
+
                             createdRec.setWidth(width);
                             createdRec.setHeight(height);
                         }
