@@ -12,8 +12,7 @@ The SketchIt application allows user to draw shapes by using provided tools and 
    - **Circle drawing tool**: clicking on this tool allows the user to draw a circle with the selected properties, where first mouse press the circle center and the mouse release after dragging sets the distance between press and release as the radius of the circle.
    - **Rectangle drawing tool**: clicking on this tool allows the user to draw a rectangle with the selected properties, where first mouse press sets the upper-left corner starting position and the mouse release after dragging sets its lower-right ending position. (Note that a rectangle is set to only to be drawn from upper left to lower right).
    - **Fill tool**: clicking on this tool allows user to change an drawn shape's fill colour to the one on the property bar by simply clicking on the shape to be filled
-
-   - 
+ 
 
 2. ##### Properties
 
